@@ -14,6 +14,9 @@ class CreateFriendsTable extends Migration
     {
         Schema::create('friends', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('friend_one')->unsigned();
+            $table->integer('friend_two')->unsigned();
+            $table->enum('status', ['0', '1', '2']);
             $table->timestamps();
         });
     }

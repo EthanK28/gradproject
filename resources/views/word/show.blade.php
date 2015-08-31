@@ -1,7 +1,14 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: es-mac
- * Date: 15. 6. 1.
- * Time: 오후 8:43
- */
+@extends('master')
+@section('content')
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            단어
+        </div>
+        <div class="panel-body">
+            단어: {{ $word->name  }}
+            <hr>
+
+            뜻: {{ $word->definition }}
+        </div>
+    </div>
+@endsection

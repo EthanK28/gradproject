@@ -37,4 +37,8 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         $this->hasMany('\App\Score');
     }
 
+    public function words() {
+
+    }
+
 }

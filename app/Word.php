@@ -8,5 +8,10 @@ class Word extends Model
 {
     //
     protected $fillable = ['name', 'definition'];
-    
+
+    public function scopeRecent($query)
+    {
+        // 최근 열개 목록 보여주기
+    }
+
 }

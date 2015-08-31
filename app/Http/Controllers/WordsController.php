@@ -54,6 +54,7 @@ class WordsController extends Controller
     public function show($id)
     {
         $word = \App\Word::find($id);
+
         return view('word.show', compact('word'));
     }
 

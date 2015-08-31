@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Score;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -17,6 +18,8 @@ class ScoresController extends Controller
     public function index()
     {
         //
+        $scores = Score::all();
+        return view('scores.index', compact('scores'));
     }
 
     /**
@@ -27,6 +30,7 @@ class ScoresController extends Controller
     public function create()
     {
         //
+        return view('scores.create');
     }
 
     /**
@@ -38,6 +42,7 @@ class ScoresController extends Controller
     public function store(Request $request)
     {
         //
+        redirect('/scores');
     }
 
     /**

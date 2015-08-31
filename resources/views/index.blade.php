@@ -24,6 +24,11 @@
             <div class="page-header">
                 <h1>신규 등록 단어 </h1>
             </div>
+            <ol>
+            @foreach($words as $word)
+                <li>{{ $word->name }}</li>
+            @endforeach
+            </ol>
         </div>
     </div>
 

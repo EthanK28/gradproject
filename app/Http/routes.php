@@ -13,7 +13,8 @@
 
 // 메인 화면
 Route::get('/', ['as' =>  'index' ,function(){
-    return view('index', ['name'=>'강은석']);
+    $words = \App\Word::all();
+    return view('index', ['name'=>'강은석', 'words'=>$words]);
 }]);
 
 // 회원 가입

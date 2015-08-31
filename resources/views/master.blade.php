@@ -43,7 +43,7 @@
                 <li class="active">{!! link_to_route('index', 'Home') !!}</li>
                 <li>{!! link_to_route('words.index', '단어') !!}</li>
                 <li>{!! link_to_route('history.index', '플레이 히스토리')!!}</li>
-                <li>{!! link_to_route('scores.index', '점수 보기')!!}</a></li>
+                <li>{!! link_to_route('scores.index', '점수 보기')!!}</li>
                 <li><a href="/freindranking">친구 랭킹 </a></li>
                 <li><a href="/gradproject/maplist.php">맵 목록</a></li>
                 <li><a href="/message">쪽지(구현중)</a></li>
@@ -62,10 +62,19 @@
                     </ul>
                 </li>-->
             </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li>{!! link_to_action('Auth\AuthController@getRegister', '회원가입') !!}</li>
-                <li><a href="user/login">로그인</a></li>
-            </ul>
+            @if(Auth::check())
+                <ul class="nav navbar-nav navbar-right">
+                    <li>{!! link_to_action('Auth\AuthController@getLogout', '로그 아웃') !!}</li>
+
+                </ul>
+
+            @else
+                <ul class="nav navbar-nav navbar-right">
+                    <li>{!! link_to_action('Auth\AuthController@getRegister', '회원가입') !!}</li>
+                    <li>{!! link_to_action('Auth\AuthController@getLogin', '로그인') !!}</li>
+
+                </ul>
+            @endif
         </div><!--/.nav-collapse -->
     </div>
 </nav>
