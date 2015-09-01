@@ -12,5 +12,9 @@ class MapTableSeeder extends Seeder
     public function run()
     {
         //
+//        DB::table('maps')->insert([
+//          'name' => ''
+//        ]);
+        factory(App\Map::class, 10)->create();
     }
 }

@@ -33,12 +33,27 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     protected $hidden = ['password', 'remember_token'];
 
-    public function scores() {
+    public function scores()
+    {
         $this->hasMany('\App\Score');
     }
 
-    public function words() {
+    public function words()
+    {
 
     }
+
+    public function has(Score $score)
+    {
+        return $this->id == $score->user_id;
+    }
+
+
+    public function role()
+    {
+        return $this->getAttribute('role');
+    }
+
+
 
 }

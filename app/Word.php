@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Word extends Model
 {
     //
+    protected $table = 'words';
+
     protected $fillable = ['name', 'definition'];
 
     public function scopeRecent($query)

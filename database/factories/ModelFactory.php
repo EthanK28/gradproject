@@ -19,3 +19,22 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'remember_token' => str_random(10),
     ];
 });
+
+//$factory->define(App\Map::class, function (Faker\Generator $faker) {
+//
+//});
+
+$factory->define(App\Word::class, function (Faker\Generator $faker) {
+
+    return [
+        'name' => $faker->word,
+        'definition' => $faker->words,
+    ];
+});
+
+$factory->define(App\Map::class, function (Faker\Generator $faker) {
+
+    return [
+        'name' => $faker->word,
+    ];
+});

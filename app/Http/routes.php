@@ -52,3 +52,12 @@ Route::resource('history', 'PlayHistoryController', [
   'only' => ['index']
 ]);
 
+Route::get('/userlist', function() {
+    if (Request::ajax()) {
+        $users = \App\User::all()->toJson();
+        return $users;
+    }
+
+    $users = \App\User::find(1)->toJson();
+    return $users;
+});

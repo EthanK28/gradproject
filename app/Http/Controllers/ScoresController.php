@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class ScoresController extends Controller
 {
@@ -30,7 +31,8 @@ class ScoresController extends Controller
     public function create()
     {
         //
-        return view('scores.create');
+        $maps = \App\Map::all();
+        return view('scores.create', compact('maps'));
     }
 
     /**
@@ -42,6 +44,10 @@ class ScoresController extends Controller
     public function store(Request $request)
     {
         //
+
+        $score = \App\Score::create($request->all());
+        $score['user_id'] = Auth::user();
+
         redirect('/scores');
     }
 
