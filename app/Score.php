@@ -9,7 +9,7 @@ class Score extends Model
     //
   protected $table = 'scores';
 
-  protected $fillable = ['score'];
+  protected $fillable = ['score','user_id','map_id'];
 
   public function scopeHighestScore(){
 

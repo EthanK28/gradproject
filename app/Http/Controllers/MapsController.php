@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Map;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -17,6 +18,8 @@ class MapsController extends Controller
     public function index()
     {
         //
+        $maps = Map::all();
+        return view('maps.index', compact('maps'));
     }
 
     /**
@@ -49,6 +52,8 @@ class MapsController extends Controller
     public function show($id)
     {
         //
+        $map = Map::findOrFail($id);
+        return view('maps.show', compact('map'));
     }
 
     /**

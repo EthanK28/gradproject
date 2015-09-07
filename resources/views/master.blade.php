@@ -46,7 +46,7 @@
                 <li>{!! link_to_route('history.index', '플레이 히스토리')!!}</li>
                 <li>{!! link_to_route('scores.index', '점수 보기')!!}</li>
                 <li><a href="/freindranking">친구 랭킹 </a></li>
-                <li><a href="/gradproject/maplist.php">맵 목록</a></li>
+                <li>{!! link_to_route('maps.index', '맵') !!}</li>
                 <li><a href="/message">쪽지(구현중)</a></li>
                 {{--<li><a href="/gradproject/memberlist.php">가입된 회원보기(관리자)</a></li>--}}
 
@@ -65,6 +65,7 @@
             </ul>
             @if(Auth::check())
                 <ul class="nav navbar-nav navbar-right">
+                    <li>Signed in as {{ Auth::user()->name }}</li>
                     <li>{!! link_to_action('Auth\AuthController@getLogout', '로그 아웃') !!}</li>
 
                 </ul>

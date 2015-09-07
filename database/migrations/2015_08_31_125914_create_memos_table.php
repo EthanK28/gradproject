@@ -20,6 +20,7 @@ class CreateMemosTable extends Migration
             $table->foreign('me_send_mb_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamp('me_send_datetime');
             $table->timestamp('me_read_datetime');
+            $table->text('text');
 
         });
     }

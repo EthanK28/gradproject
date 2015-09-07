@@ -2,18 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Map;
-use App\Score;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 
-class ScoresController extends Controller
+class MemosController extends Controller
 {
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->middleware('auth');
     }
 
@@ -24,18 +22,11 @@ class ScoresController extends Controller
      */
     public function index()
     {
-        //
-        $scores = Score::where('user_id', Auth::user()->id)->get();
-        foreach($scores as $i => $score)
-        {
-            $map_name = Map::find($score->map_id)->first();
-            $map_name = $map_name->name;
-            $scores[$i]['map_name'] = $map_name;
+        // 쪽지 리스트
+        $recv_memos = Memo::where('me_recv_mb_id', Auth::user()->id);
+        $send_memos = Memo::where('me_send_mb_id', Auth::user()->id);
 
-
-        }
-
-        return view('scores.index', compact('scores'));
+        return view('memos.index', compact('recv_memos', 'send_memos'));
     }
 
     /**
@@ -46,8 +37,6 @@ class ScoresController extends Controller
     public function create()
     {
         //
-        $maps = \App\Map::all();
-        return view('scores.create', compact('maps'));
     }
 
     /**
@@ -59,17 +48,6 @@ class ScoresController extends Controller
     public function store(Request $request)
     {
         //
-        $validator = null;
-        $score_tmp = $request->all();
-        $score_tmp['user_id'] = Auth::user()->id;
-//        dd($score_tmp);
-
-        $score = \App\Score::create($score_tmp);
-        $score['user_id'] = Auth::user()->id;
-
-
-
-        return redirect('/scores');
     }
 
     /**
