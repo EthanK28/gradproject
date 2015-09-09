@@ -16,4 +16,6 @@ class Word extends Model
         // 최근 열개 목록 보여주기
     }
 
+
+
 }

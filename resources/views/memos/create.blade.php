@@ -108,16 +108,18 @@
                 },
                 select: function( event, ui ) {
                     $( "#me_recv_mb_id" ).val( ui.item.email );
+                    $( "#me_recv_mb_id" ).attr('value', ui.item.id );
                     console.log('선택');
 //                    $( "#project-id" ).val( ui.item.value );
 //                    $( "#project-description" ).html( ui.item.desc );
 //                    $( "#project-icon" ).attr( "src", "images/" + ui.item.icon );
 
+
                     return false;
                 }
             }).autocomplete( "instance" )._renderItem = function( ul, item ) {
                 return $( "<li>" )
-                        .append( "<a>" + item.name + "<br>" + item.email + "</a>" )
+                        .append( "<img src='#'>"+"<a>" + item.name + "<br>" + item.email + "</a>" )
                         .appendTo( ul );
             };
         });

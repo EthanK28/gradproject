@@ -25,10 +25,11 @@ class MemosController extends Controller
     public function index()
     {
         // 쪽지 리스트
-//        $recv_memos = Memo::where('me_recv_mb_id', Auth::user()->id);
-//        $send_memos = Memo::where('me_send_mb_id', Auth::user()->id);
+        $recv_memos = Memo::where('me_recv_mb_id', 1)->get();
 
-        return view('memos.index');
+        $send_memos = Memo::where('me_send_mb_id', 1);
+
+        return view('memos.index', compact('recv_memos', 'send_memos'));
 //        return "메모 인덱스";
     }
 
@@ -53,6 +54,12 @@ class MemosController extends Controller
     public function store(Request $request)
     {
         //
+        $memo = $request->all();
+        $memo['me_send_mb_id'] = 1;
+        Memo::create($memo);
+//        $memo->save()
+//        flash('Hello');
+        return '생성 완료';
 
     }
 
