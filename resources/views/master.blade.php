@@ -9,6 +9,8 @@
     {{--<link rel="icon" href="../../favicon.ico">--}}
 
     <title>졸업작품 영어 게임</title>
+    <!-- jQuery UI -->
+    <link rel="stylesheet" href="{{ asset('css/jquery-ui.min.css') }}">
 
     <!-- Bootstrap core CSS -->
     <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -43,11 +45,11 @@
             <ul class="nav navbar-nav">
                 <li class="active">{!! link_to_route('index', 'Home') !!}</li>
                 <li>{!! link_to_route('words.index', '단어') !!}</li>
-                <li>{!! link_to_route('history.index', '플레이 히스토리')!!}</li>
+{{--                <li>{!! link_to_route('history.index', '플레이 히스토리')!!}</li>--}}
                 <li>{!! link_to_route('scores.index', '점수 보기')!!}</li>
                 <li><a href="/freindranking">친구 랭킹 </a></li>
                 <li>{!! link_to_route('maps.index', '맵') !!}</li>
-                <li><a href="/message">쪽지(구현중)</a></li>
+                <li>{!! link_to_route('memos.index', '쬭지') !!}</li>
                 {{--<li><a href="/gradproject/memberlist.php">가입된 회원보기(관리자)</a></li>--}}
 
                 <!--<li class="dropdown">
@@ -72,6 +74,7 @@
 
             @else
                 <ul class="nav navbar-nav navbar-right">
+                    <li><a href="/login/facebook">Facebook<i class="fa fa-facebook-square fa-lg"></i></a></li>
                     <li>{!! link_to_action('Auth\AuthController@getRegister', '회원가입') !!}</li>
                     <li>{!! link_to_action('Auth\AuthController@getLogin', '로그인') !!}</li>
 
@@ -94,6 +97,9 @@
 <script src="/bootstrap/js/bootstrap.min.js"></script>
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <!--<script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>-->
+
+<!-- Jquery Ui JavaScript -->
+<script src="{{ asset('js/jquery-ui.min.js') }}"></script>
 @yield('footer')
 @yield('js')
 </body>

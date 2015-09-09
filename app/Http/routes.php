@@ -14,8 +14,14 @@
 // 메인 화면
 Route::get('/', ['as' =>  'index' ,function(){
     $words = \App\Word::all();
-    return view('index', ['name'=>'강은석', 'words'=>$words]);
+    $rct_histories = DB::table('scores')->orderBy('created_at', 'desc')->take(5)->get();
+
+    return view('index', compact('rct_histories', 'words'))->with(['name' => '강은석']);
 }]);
+
+
+// 페이스북 연동
+Route::get('login/{provider?}', 'Auth\AuthController@login');
 
 // 회원 가입
 Route::controllers([
@@ -34,6 +40,11 @@ Route::resource('scores', 'ScoresController', [
 // Map 컨트롤러
 
 Route::resource('maps', 'MapsController', [
+    'only' => [ 'store' ,  'index' , 'create' , 'show']
+]);
+
+// 메모 컨트롤러
+Route::resource('memos', 'MapsController', [
     'only' => [ 'store' ,  'index' , 'create' , 'show']
 ]);
 
