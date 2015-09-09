@@ -43,8 +43,8 @@ Route::resource('maps', 'MapsController', [
     'only' => [ 'store' ,  'index' , 'create' , 'show']
 ]);
 
-// 메모 컨트롤러
-Route::resource('memos', 'MapsController', [
+// 쪽지 컨트롤러
+Route::resource('memos', 'MemosController', [
     'only' => [ 'store' ,  'index' , 'create' , 'show']
 ]);
 
@@ -70,5 +70,7 @@ Route::get('/userlist', function() {
     }
 
     $users = \App\User::find(1)->toJson();
+
+//    dd($users);
     return $users;
 });

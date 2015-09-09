@@ -2,17 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Memo;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+
 
 class MemosController extends Controller
 {
 
     public function __construct()
     {
-        $this->middleware('auth');
+//        $this->middleware('auth');
     }
 
     /**
@@ -23,10 +25,11 @@ class MemosController extends Controller
     public function index()
     {
         // 쪽지 리스트
-        $recv_memos = Memo::where('me_recv_mb_id', Auth::user()->id);
-        $send_memos = Memo::where('me_send_mb_id', Auth::user()->id);
+//        $recv_memos = Memo::where('me_recv_mb_id', Auth::user()->id);
+//        $send_memos = Memo::where('me_send_mb_id', Auth::user()->id);
 
-        return view('memos.index', compact('recv_memos', 'send_memos'));
+        return view('memos.index');
+//        return "메모 인덱스";
     }
 
     /**
@@ -37,6 +40,8 @@ class MemosController extends Controller
     public function create()
     {
         //
+
+        return view('memos.create');
     }
 
     /**
@@ -48,6 +53,7 @@ class MemosController extends Controller
     public function store(Request $request)
     {
         //
+
     }
 
     /**

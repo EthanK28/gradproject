@@ -14,7 +14,8 @@ class CreateWordsTable extends Migration
     {
         Schema::create('words', function (Blueprint $table) {
             $table->increments('id');
-            
+            $table->enum('type', ['verb', 'noun', 'adjective', 'adverb', 'pronoun', 'preposition', 'conjunction',
+                'interjection']);
             $table->string('name');
             $table->text('definition');
             $table->timestamps();

@@ -6,7 +6,7 @@
     <h1 class="text-center ">영어 단어 배우기</h1>
 
     <p class="text-center">
-        {{ $name }} 님 환영합니다
+         테스트 님 환영합니다
     </p>
 
     <br/>
