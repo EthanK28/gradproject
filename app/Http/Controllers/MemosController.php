@@ -14,7 +14,7 @@ class MemosController extends Controller
 
     public function __construct()
     {
-//        $this->middleware('auth');
+        $this->middleware('auth');
     }
 
     /**
@@ -58,8 +58,8 @@ class MemosController extends Controller
         $memo['me_send_mb_id'] = 1;
         Memo::create($memo);
 //        $memo->save()
-//        flash('Hello');
-        return '생성 완료';
+        flash('쪽지 생성 완료');
+        return redirect('/memos');
 
     }
 
