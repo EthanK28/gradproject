@@ -3,9 +3,11 @@
 @section('content')
     <h2>쪽지 보내기</h2>
     <hr>
+    @include('partial.flash.flash')
+
     @include('partial.forms.memo')
 
-    <input type="text" id="project">
+
 @stop
 
 @section('js')

@@ -19,6 +19,8 @@
     <link href="/css/common.css" rel="stylesheet">
 
 
+    <script src="{{ asset('js/holder.js') }}"></script>
+
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -47,9 +49,9 @@
                 <li>{!! link_to_route('words.index', '단어') !!}</li>
 {{--                <li>{!! link_to_route('history.index', '플레이 히스토리')!!}</li>--}}
                 <li>{!! link_to_route('scores.index', '점수 보기')!!}</li>
-                <li><a href="/freindranking">친구 랭킹 </a></li>
+                {{--<li><a href="/freindranking">친구 랭킹 </a></li>--}}
                 <li>{!! link_to_route('maps.index', '맵') !!}</li>
-                <li>{!! link_to_route('memos.index', '쬭지') !!}</li>
+                <li>{!! link_to_route('memos.index', '쪽지') !!}</li>
                 {{--<li><a href="/gradproject/memberlist.php">가입된 회원보기(관리자)</a></li>--}}
 
                 <!--<li class="dropdown">
@@ -67,13 +69,20 @@
             </ul>
             @if(Auth::check())
                 <ul class="nav navbar-nav navbar-right">
-                    <li>Signed in as {{ Auth::user()->name }}</li>
+                    @if(Auth::user()->avartar)
+
+
+                    @endif
+
+                    <li><img src="holder.js/45x45" class="img-circle"/> <span class="navbar-text">Signed in as <span style="color:#23527c"><strong>{{ Auth::user()->name }}</strong></span></span></li>
                     <li>{!! link_to_action('Auth\AuthController@getLogout', '로그 아웃') !!}</li>
 
                 </ul>
 
             @else
                 <ul class="nav navbar-nav navbar-right">
+
+                    <li>dd</li>
                     <li><a href="/login/facebook">Facebook<i class="fa fa-facebook-square fa-lg"></i></a></li>
                     <li>{!! link_to_action('Auth\AuthController@getRegister', '회원가입') !!}</li>
                     <li>{!! link_to_action('Auth\AuthController@getLogin', '로그인') !!}</li>
@@ -100,6 +109,11 @@
 
 <!-- Jquery Ui JavaScript -->
 <script src="{{ asset('js/jquery-ui.min.js') }}"></script>
+
+<script src="{{ asset('js/highcharts.js') }}"></script>
+<script src="{{ asset('js/placeholders.js') }}"></script>
+<script src="{{ asset('js/countUp.js') }}"></script>
+
 @yield('footer')
 @yield('js')
 </body>

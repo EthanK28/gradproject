@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Word;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -18,8 +19,45 @@ class WordsController extends Controller
     {
         //
         $words = \App\Word::all();
-        return view('word.index', compact('words'));
+        $count_of_types = $this->countsOfTypes();
+        dd($this->countsOfTypesToJson());
+
+        return view('word.index', compact('words', 'count_of_types'));
     }
+
+    /**
+     * Return the counts of all word types
+     *
+     * @return mixed
+     */
+    public function countsOfTypes()
+    {
+        $types = ['verb', 'noun', 'adjective', 'adverb', 'pronoun', 'preposition', 'conjunction', 'interjection'];
+        foreach($types as $type) {
+
+            $counts_types[$type] = Word::where('type', $type)->count();
+        }
+
+        return $counts_types;
+
+    }
+
+    public function countsOfTypesToJson()
+    {
+        $types = ['verb', 'noun', 'adjective', 'adverb', 'pronoun', 'preposition', 'conjunction', 'interjection'];
+        foreach($types as $i => $type) {
+
+            $counts_types[$i]['name'] = Word::where('type', $type)->count();
+            $counts_types[$i]['y'] = Word::where('type', $type)->count();
+
+        }
+
+
+
+        return json_encode($counts_types);
+
+    }
+
 
     /**
      * Show the form for creating a new resource.

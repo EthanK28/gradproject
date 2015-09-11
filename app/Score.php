@@ -11,7 +11,7 @@ class Score extends Model
 
   protected $fillable = ['score','user_id','map_id'];
 
-  public function scopeHighestScore(){
+  public function scopeHighestScore($query){
 
   }
 

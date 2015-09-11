@@ -138,6 +138,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class,
+        Laracasts\Flash\FlashServiceProvider::class,
 
 
         /*
@@ -197,6 +198,7 @@ return [
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
+        'Flash' => Laracasts\Flash\Flash::class,
 
     ],
 
