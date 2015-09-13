@@ -57,6 +57,11 @@
 
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div id="container"></div>
+        </div>
+    </div>
 
 @endsection
 
@@ -169,6 +174,45 @@
                         .append("<a>" + item.label + "<br>" + item.desc + "</a>")
                         .appendTo(ul);
             };
+        });
+    </script>
+    <script>
+        // 그래프
+        $(function () {
+            $('#container').highcharts({
+                chart: {
+                    type: 'line'
+                },
+                title: {
+                    text: '최근 일주일 플레이 횟수'
+                },
+                subtitle: {
+                    text: ''
+                },
+                xAxis: {
+                    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct']
+                },
+                yAxis: {
+                    title: {
+                        text: 'Temperature (°C)'
+                    }
+                },
+                plotOptions: {
+                    line: {
+                        dataLabels: {
+                            enabled: true
+                        },
+                        enableMouseTracking: false
+                    }
+                },
+                series: [{
+                    name: 'Tokyo',
+                    data: [7.0, 6.9, 9.5, 14.5, 18.4, 21.5, 25.2, 26.5, 23.3, 18.3]
+                }, {
+                    name: 'London',
+                    data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3]
+                }]
+            });
         });
     </script>
 @endsection

@@ -18,9 +18,9 @@ class WordsController extends Controller
     public function index()
     {
         //
-        $words = \App\Word::all();
+        $words = \App\Word::paginate(5);
         $count_of_types = $this->countsOfTypes();
-        dd($this->countsOfTypesToJson());
+//        dd($this->countsOfTypesToJson());
 
         return view('word.index', compact('words', 'count_of_types'));
     }
@@ -33,7 +33,7 @@ class WordsController extends Controller
     public function countsOfTypes()
     {
         $types = ['verb', 'noun', 'adjective', 'adverb', 'pronoun', 'preposition', 'conjunction', 'interjection'];
-        foreach($types as $type) {
+        foreach($types as $i => $type) {
 
             $counts_types[$type] = Word::where('type', $type)->count();
         }
@@ -47,7 +47,7 @@ class WordsController extends Controller
         $types = ['verb', 'noun', 'adjective', 'adverb', 'pronoun', 'preposition', 'conjunction', 'interjection'];
         foreach($types as $i => $type) {
 
-            $counts_types[$i]['name'] = Word::where('type', $type)->count();
+            $counts_types[$i]['name'] = $type;
             $counts_types[$i]['y'] = Word::where('type', $type)->count();
 
         }
@@ -79,6 +79,7 @@ class WordsController extends Controller
     public function store(Request $request)
     {
         //
+//        dd($request);
         \App\Word::create($request->all());
         return redirect('/words/create');
     }
@@ -128,5 +129,9 @@ class WordsController extends Controller
     public function destroy($id)
     {
         //
+        $word = Word::find($id);
+        $word->delete();
+        dd($word);
+        return redirect()->back();
     }
 }

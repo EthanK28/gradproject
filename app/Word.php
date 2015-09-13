@@ -9,7 +9,7 @@ class Word extends Model
     //
     protected $table = 'words';
 
-    protected $fillable = ['name', 'definition'];
+    protected $fillable = ['name','type', 'definition'];
 
     public function scopeRecent($query)
     {

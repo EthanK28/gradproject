@@ -20,6 +20,7 @@
                     <tr>
                         <th>단어</th>
                         <th>생성 날짜</th>
+                        <th></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -27,11 +28,12 @@
                         <tr>
                             <td>{!! link_to_route('words.show', $word->name, $word->id) !!}</td>
                             <td>{{ $word->created_at }}</td>
+                            <td>{!! link_to_route('words.destroy', '삭제', $word->id, ['class' => 'btn btn-danger']) !!}</td>
                         </tr>
                     @endforeach
                     </tbody>
                 </table>
-
+                {!! $words->render() !!}
             </div>
         </div>
     </div>
@@ -40,7 +42,7 @@
             <h3>단어 분포</h3>
             <div id="wordspread"></div>
         </div>
-        <div class="col-md-6">
+        <div id="test" class="col-md-6">
 
         </div>
     </div>
@@ -51,57 +53,69 @@
     <script>
         $(function () {
 
-            $(document).ready(function () {
+                // 차트 데이터
 
-                // Build the chart
-                $('#wordspread').highcharts({
-                    chart: {
-                        plotBackgroundColor: null,
-                        plotBorderWidth: null,
-                        plotShadow: false,
-                        type: 'pie'
-                    },
-                    title: {
-                        text: '등록된 단어 분포'
-                    },
-                    tooltip: {
-                        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-                    },
-                    plotOptions: {
-                        pie: {
-                            allowPointSelect: true,
-                            cursor: 'pointer',
-                            dataLabels: {
+                var source = [];
+                $.ajax({
+                    type: "GET",
+                    url: "/countsoftypestojson",
+                    dataType: "json",
+                    success: function (data) {
+
+                        source = data;
+                        console.log('아작스 실행');
+                        console.log(data);
+                        console.log(typeof data[0].name);
+
+                        $('#test').html(data);
+
+                        // Build the chart
+                        $('#wordspread').highcharts({
+                            chart: {
+                                plotBackgroundColor: null,
+                                plotBorderWidth: null,
+                                plotShadow: false,
+                                type: 'pie'
+                            },
+                            credits: {
                                 enabled: false
                             },
-                            showInLegend: true
-                        }
-                    },
-                    series: [{
-                        name: "Brands",
-                        colorByPoint: true,
-                        data: [{
-                            name: "Microsoft Internet Explorer",
-                            y: 56.33
-                        }, {
-                            name: "Chrome",
-                            y: 24.03
-                        }, {
-                            name: "Firefox",
-                            y: 10.38
-                        }, {
-                            name: "Safari",
-                            y: 4.77
-                        }, {
-                            name: "Opera",
-                            y: 0.91
-                        }, {
-                            name: "Proprietary or Undetectable",
-                            y: 0.2
-                        }]
-                    }]
+                            title: {
+                                text: '등록된 단어 종류별 분포'
+                            },
+                            tooltip: {
+                                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                            },
+                            plotOptions: {
+                                pie: {
+                                    allowPointSelect: true,
+                                    cursor: 'pointer',
+                                    dataLabels: {
+                                        enabled: false
+                                    },
+                                    showInLegend: true
+                                }
+                            },
+                            series: [{
+                                name: "Brands",
+                                colorByPoint: true,
+                                data: data
+                            }]
+                        });
+
+
+
+
+
+                    }
+                }).fail(function(){
+                    console.log('아작스 실패');
                 });
-            });
+
+
+
+
+
         });
     </script>
 @stop

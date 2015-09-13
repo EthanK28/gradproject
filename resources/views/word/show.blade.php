@@ -5,10 +5,13 @@
             단어
         </div>
         <div class="panel-body">
-            단어: {{ $word->name  }}
+            <h3>단어: <strong>{{ $word->name  }}</strong></h3>
+            <h4>{{ ucfirst($word->type) }}</h4>
             <hr>
 
-            뜻: {{ $word->definition }}
+            뜻: <br/>
+            {{ $word->definition }}
+
         </div>
     </div>
 @endsection

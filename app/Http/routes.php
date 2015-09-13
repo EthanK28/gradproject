@@ -13,8 +13,11 @@
 
 // 메인 화면
 Route::get('/', ['as' =>  'index' ,function(){
-    $words = \App\Word::all();
+    $words = DB::table('words')->orderBy('created_at', 'desc')->take(5)->get();
     $rct_histories = DB::table('scores')->orderBy('created_at', 'desc')->take(5)->get();
+
+    // 일주일 전 로스트 체크
+    $now = \Carbon\Carbon::now();
 
     return view('index', compact('rct_histories', 'words'))->with(['name' => '강은석']);
 }]);
@@ -28,6 +31,9 @@ Route::controllers([
     'auth' => 'Auth\AuthController',
     'password' => 'Auth\PasswordController',
 ]);
+
+// 타입 카운트
+Route::get('countsoftypestojson', 'WordsController@countsOfTypesToJson');
 
 // 스코어 부분 처리
 

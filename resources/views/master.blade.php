@@ -109,13 +109,14 @@
 
 <!-- Jquery Ui JavaScript -->
 <script src="{{ asset('js/jquery-ui.min.js') }}"></script>
-
 <script src="{{ asset('js/highcharts.js') }}"></script>
-<script src="{{ asset('js/placeholders.js') }}"></script>
-<script src="{{ asset('js/countUp.js') }}"></script>
+
 
 @yield('footer')
 @yield('js')
+
+<script src="{{ asset('js/placeholders.js') }}"></script>
+<script src="{{ asset('js/countUp.js') }}"></script>
 </body>
 </html>
 

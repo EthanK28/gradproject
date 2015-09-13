@@ -11,8 +11,8 @@ class UserRepository {
                 'name' => $userData->name,
                 'username' => $userData->nickname,
                 'email' => $userData->email,
-                'avatar' => $userData->avatar,
-                'active' => 1,
+                'avatar' => $userData->avatar
+
             ]);
         }
 
