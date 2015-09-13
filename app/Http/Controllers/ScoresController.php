@@ -115,5 +115,8 @@ class ScoresController extends Controller
     public function destroy($id)
     {
         //
+        $word = Word::find($id);
+        $word->delete();
+        return "단어 삭제 완료";
     }
 }

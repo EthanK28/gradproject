@@ -26,6 +26,8 @@ Route::get('/', ['as' =>  'index' ,function(){
 // 페이스북 연동
 Route::get('login/{provider?}', 'Auth\AuthController@login');
 
+
+
 // 회원 가입
 Route::controllers([
     'auth' => 'Auth\AuthController',
@@ -34,6 +36,48 @@ Route::controllers([
 
 // 타입 카운트
 Route::get('countsoftypestojson', 'WordsController@countsOfTypesToJson');
+
+// 메인 차크 처리 일주일간 플레이 횟수
+Route::get('lastweek', function() {
+    $scores = \App\Score::all();
+    foreach($scores as $i => $score)
+    {
+        $scores['time'][$i] = $score->created_at;
+    }
+
+   return $scores->toJson();
+});
+
+
+Route::get('lwwords', function () {
+    $now = \Carbon\Carbon::now();
+
+    $now_year = $now->year;
+    $now_month = $now->month;
+    $now_day = $now->day;
+
+    $today_midnight = \Carbon\Carbon::create($now_year, $now_month, $now_day, 0);
+
+    $tmrw_midnight = $today_midnight->copy()->addDay();
+
+    $one_week_before_now = $tmrw_midnight->copy()->subWeek();
+
+    // 일주일 전부터 조회한다
+
+    $words = \App\Word::where('created_at', '<', $one_week_before_now);
+    $words_count = [];
+    for($i = 0; $i < 7; $i++)
+    {
+        $words_count[$one_week_before_now->toDateString()] = \App\Word::where('created_at', '>', $one_week_before_now)
+            ->where('created_at', '<', $one_week_before_now->copy()->addDay())->count();
+        $one_week_before_now->addDay();
+    }
+
+    // 오늘 새벽 0시
+
+
+    return json_encode($words_count);
+});
 
 // 스코어 부분 처리
 

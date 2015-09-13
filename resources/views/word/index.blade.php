@@ -43,7 +43,9 @@
             <div id="wordspread"></div>
         </div>
         <div id="test" class="col-md-6">
+            <div id="lastweek">
 
+            </div>
         </div>
     </div>
 @endsection

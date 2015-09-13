@@ -21,11 +21,15 @@
                 </div>
                 <div class="panel-body">
                     <ol>
-                        @foreach($rct_histories as $history)
-                            <li>{!! link_to_route('scores.show', $history->score, $history->id) !!} / {!!
-                                $history->created_at !!}
-                            </li>
-                        @endforeach
+                        @if(Auth::check())
+                            @foreach($rct_histories as $history)
+                                <li>{!! link_to_route('scores.show', $history->score, $history->id) !!} / {!!
+                                    $history->created_at !!}
+                                </li>
+                            @endforeach
+                        @else
+                            로그인 필요
+                        @endif
                     </ol>
                 </div>
             </div>
@@ -39,9 +43,13 @@
                 </div>
                 <div class="panel-body">
                     <ol>
-                        @foreach($words as $word)
-                            <li>{!! link_to_route('words.show', $word->name, $word->id) !!}</li>
-                        @endforeach
+                        @if(Auth::check())
+                            @foreach($words as $word)
+                                <li>{!! link_to_route('words.show', $word->name, $word->id) !!}</li>
+                            @endforeach
+                        @else
+                            로그인 필요
+                        @endif
                     </ol>
                 </div>
             </div>
