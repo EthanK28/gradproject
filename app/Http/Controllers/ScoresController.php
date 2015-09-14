@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Laracasts\Flash\Flash;
 
 class ScoresController extends Controller
 {
@@ -64,10 +65,12 @@ class ScoresController extends Controller
         $score_tmp['user_id'] = Auth::user()->id;
 //        dd($score_tmp);
 
+
+
         $score = \App\Score::create($score_tmp);
         $score['user_id'] = Auth::user()->id;
 
-
+        Flash::info('점수 생성 성공');
 
         return redirect('/scores');
     }
@@ -115,8 +118,10 @@ class ScoresController extends Controller
     public function destroy($id)
     {
         //
-        $word = Word::find($id);
-        $word->delete();
-        return "단어 삭제 완료";
+        $score = Score::find($id);
+        $score->delete();
+        Flash::error('점수 삭제 성공');
+
+        return redirect('scores');
     }
 }

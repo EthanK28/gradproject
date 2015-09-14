@@ -15,6 +15,7 @@
                 단어 목록
             </div>
             <div class="panel-body">
+                @include('partial.flash.flash')
                 <table class="table">
                     <thead>
                     <tr>
@@ -28,7 +29,11 @@
                         <tr>
                             <td>{!! link_to_route('words.show', $word->name, $word->id) !!}</td>
                             <td>{{ $word->created_at }}</td>
-                            <td>{!! link_to_route('words.destroy', '삭제', $word->id, ['class' => 'btn btn-danger']) !!}</td>
+                            <td>
+                                {!! Form::open(['route' => ['words.destroy', $word->id], 'method' => 'delete']) !!}
+                                {!! Form::submit('삭제', ['class' => 'btn btn-danger']) !!}
+                                {!! Form::close() !!}
+                            </td>
                         </tr>
                     @endforeach
                     </tbody>

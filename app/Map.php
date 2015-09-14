@@ -8,6 +8,8 @@ class Map extends Model
 {
     //
 
+    protected $fillable = ['name'];
+
     public function users()
     {
         return $this->hasManyThrough('App\User', 'App\Score');

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Laracasts\Flash\Flash;
 
 class WordsController extends Controller
 {
@@ -58,6 +59,41 @@ class WordsController extends Controller
 
     }
 
+    public function lwWords (){
+        $now = \Carbon\Carbon::now();
+
+        $now_year = $now->year;
+        $now_month = $now->month;
+        $now_day = $now->day;
+
+        $today_midnight = \Carbon\Carbon::create($now_year, $now_month, $now_day, 0);
+
+        $tmrw_midnight = $today_midnight->copy()->addDay();
+
+        $one_week_before_now = $tmrw_midnight->copy()->subWeek();
+
+        // 일주일 전부터 조회한다
+
+        $words = \App\Word::where('created_at', '<', $one_week_before_now);
+        $words_count = [];
+
+        $words_count['series']['name'] = 'Test';
+
+
+        for($i = 0; $i < 7; $i++)
+        {
+            $words_count['categories'][$i] = $one_week_before_now->toDateString();
+            $words_count['series']['data'][] = \App\Word::where('created_at', '>', $one_week_before_now)
+                ->where('created_at', '<', $one_week_before_now->copy()->addDay())->count();
+            $one_week_before_now->addDay();
+        }
+
+        // 오늘 새벽 0시
+
+
+        return json_encode($words_count);
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -81,7 +117,8 @@ class WordsController extends Controller
         //
 //        dd($request);
         \App\Word::create($request->all());
-        return redirect('/words/create');
+        Flash::success('단어 생성 성공');
+        return redirect('/words');
     }
 
     /**
@@ -131,7 +168,7 @@ class WordsController extends Controller
         //
         $word = Word::find($id);
         $word->delete();
-        dd($word);
-        return redirect()->back();
+        Flash::error('단어 삭제 성공');
+        return redirect('words');
     }
 }

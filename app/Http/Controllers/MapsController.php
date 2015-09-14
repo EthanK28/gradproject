@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Laracasts\Flash\Flash;
 
 class MapsController extends Controller
 {
@@ -30,6 +31,7 @@ class MapsController extends Controller
     public function create()
     {
         //
+        return view('maps.create');
     }
 
     /**
@@ -41,6 +43,11 @@ class MapsController extends Controller
     public function store(Request $request)
     {
         //
+
+        Map::create($request->all());
+        Flash::success('맵 생성 성공!');
+        return redirect('maps');
+
     }
 
     /**
@@ -88,5 +95,9 @@ class MapsController extends Controller
     public function destroy($id)
     {
         //
+        Map::find($id)->delete();
+        Flash::error('맵 삭제 성공');
+        return redirect('maps');
+
     }
 }

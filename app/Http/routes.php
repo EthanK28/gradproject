@@ -17,7 +17,7 @@ Route::get('/', ['as' =>  'index' ,function(){
     $rct_histories = DB::table('scores')->orderBy('created_at', 'desc')->take(5)->get();
 
     // 일주일 전 로스트 체크
-    // 평균 점수, 최고 점수
+    // 평균 점수, 최고 점수, 플레이 횟수
     $now = \Carbon\Carbon::now();
 
     $now_year = $now->year;
@@ -26,18 +26,88 @@ Route::get('/', ['as' =>  'index' ,function(){
 
     $today_midnight = \Carbon\Carbon::create($now_year, $now_month, $now_day, 0);
 
-    
+
 
 
     return view('index', compact('rct_histories', 'words'))->with(['name' => '강은석']);
 }]);
 
+Route::get('avgplay', function () {
 
-function barChartData($name, $data)
+    $data = lastWeekAvgData('scores', 'score');
+    return json_encode($data);
+});
+
+function barLineChartData($table_name, $name, $data)
 {
+    $now = \Carbon\Carbon::now();
+
+    $now_year = $now->year;
+    $now_month = $now->month;
+    $now_day = $now->day;
+
+    $today_midnight = \Carbon\Carbon::create($now_year, $now_month, $now_day, 0);
+
+    $tmrw_midnight = $today_midnight->copy()->addDay();
+
+    $one_week_before_now = $tmrw_midnight->copy()->subWeek();
+
+    for($i = 0; $i < 7; $i++)
+    {
+        $words_count['categories'][$i] = $one_week_before_now->toDateString();
+        $words_count['series']['data'][] = \App\Word::where('created_at', '>', $one_week_before_now)
+            ->where('created_at', '<', $one_week_before_now->copy()->addDay())->count();
+        $one_week_before_now->addDay();
+    }
 
 }
 
+function lastWeekAvgData($table_name, $matched_column, $value = null)
+{
+    $one_week_before_now = midnightOneWeekBeforeNow();
+
+    $data= [];
+    for($i = 0; $i < 7; $i++) {
+        $data[] = DB::table($table_name)
+            ->where('created_at', '>',$one_week_before_now)
+            ->where('created_at', '<', $one_week_before_now->copy()->addDay())
+            ->avg($matched_column);
+    }
+
+    return $data;
+}
+
+function oneWeekCategoreis()
+{
+    $one_week_before_now = midnightOneWeekBeforeNow();
+
+    $categories = [];
+    for($i = 0; $i < 7; $i++)
+    {
+        $categories[] = $one_week_before_now->toDateString();
+        $one_week_before_now->addDay();
+    }
+
+    return $categories;
+
+}
+
+function midnightOneWeekBeforeNow()
+{
+    $now = \Carbon\Carbon::now();
+
+    $now_year = $now->year;
+    $now_month = $now->month;
+    $now_day = $now->day;
+
+    $today_midnight = \Carbon\Carbon::create($now_year, $now_month, $now_day, 0);
+
+    $tmrw_midnight = $today_midnight->copy()->addDay();
+
+    $one_week_before_now = $tmrw_midnight->copy()->subWeek();
+
+    return $one_week_before_now;
+}
 
 
 
@@ -67,46 +137,14 @@ Route::get('lastweek', function() {
 });
 
 
-Route::get('lwwords', function () {
-    $now = \Carbon\Carbon::now();
-
-    $now_year = $now->year;
-    $now_month = $now->month;
-    $now_day = $now->day;
-
-    $today_midnight = \Carbon\Carbon::create($now_year, $now_month, $now_day, 0);
-
-    $tmrw_midnight = $today_midnight->copy()->addDay();
-
-    $one_week_before_now = $tmrw_midnight->copy()->subWeek();
-
-    // 일주일 전부터 조회한다
-
-    $words = \App\Word::where('created_at', '<', $one_week_before_now);
-    $words_count = [];
-
-    $words_count['series']['name'] = 'Test';
-
-
-    for($i = 0; $i < 7; $i++)
-    {
-        $words_count['categories'][$i] = $one_week_before_now->toDateString();
-        $words_count['series']['data'][] = \App\Word::where('created_at', '>', $one_week_before_now)
-            ->where('created_at', '<', $one_week_before_now->copy()->addDay())->count();
-        $one_week_before_now->addDay();
-    }
-
-    // 오늘 새벽 0시
-
-
-    return json_encode($words_count);
-});
+// 지난 일주일간 단어
+Route::get('lwwords', 'WordsController@lwWords');
 
 // 스코어 부분 처리
 
 Route::resource('scores', 'ScoresController', [
    'only'=>[
-        'store', 'index', 'create', 'show'
+        'store', 'index', 'create', 'show','destroy'
    ]
 ]);
 
