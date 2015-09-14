@@ -14,4 +14,9 @@ class Map extends Model
     {
         return $this->hasManyThrough('App\User', 'App\Score');
     }
+
+    public function scores()
+    {
+        return $this->hasMany('App\Score');
+    }
 }

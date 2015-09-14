@@ -59,7 +59,7 @@
     <hr>
     <div class="row">
         <div class="col-md-6">
-            <img data-src="holder.js/50x50" class="img-circle">
+
         </div>
         <div class="col-md-6">
 
@@ -101,126 +101,67 @@
             });
         });
     </script>
-    <style>
-        #project-label {
-            display: block;
-            font-weight: bold;
-            margin-bottom: 1em;
-        }
-
-        #project-icon {
-            float: left;
-            height: 32px;
-            width: 32px;
-        }
-
-        #project-description {
-            margin: 0;
-            padding: 0;
-        }
-    </style>
 
     <script>
-        $(function () {
-            var projects = [
-                {
-                    value: "jquery",
-                    label: "jQuery",
-                    desc: "the write less, do more, JavaScript library",
-                    icon: "jquery_32x32.png"
-                },
-                {
-                    value: "jquery-ui",
-                    label: "jQuery UI",
-                    desc: "the official user interface library for jQuery",
-                    icon: "jqueryui_32x32.png"
-                },
-                {
-                    value: "sizzlejs",
-                    label: "Sizzle JS",
-                    desc: "a pure-JavaScript CSS selector engine",
-                    icon: "sizzlejs_32x32.png"
-                }
-            ];
+        // 그래프
 
-            var users = [];
+        $(function () {
+
+            var categories = $.get('/categories', function (data) {
+                    console.log(data);
+                    console.log("아작스: "+Date.now());
+
+
+            });
 
             $.ajax({
                 type: "GET",
-                url: "userlist",
+                url: "mainbarchart",
                 dataType: "json",
                 success: function (data) {
+                    console.log(data);
+//                    console.log(data['maxplay']);
+//                    console.log(data['avgplay']);
 
-                    users = data;
-                    console.log('아작스 실행');
-                    console.log(data[0]);
-
-                }
-            });
-
-
-            $("#project").autocomplete({
-                minLength: 0,
-                source: projects,
-                focus: function (event, ui) {
-                    console.log(users + 'dd');
-                    console.log(projects);
-                    $("#project").val(ui.item.label);
-                    return false;
-                },
-                select: function (event, ui) {
-                    $("#project").val(ui.item.label);
-                    $("#project-id").val(ui.item.value);
-                    $("#project-description").html(ui.item.desc);
-                    $("#project-icon").attr("src", "images/" + ui.item.icon);
-
-                    return false;
-                }
-            })
-                    .autocomplete("instance")._renderItem = function (ul, item) {
-                return $("<li>")
-                        .append("<a>" + item.label + "<br>" + item.desc + "</a>")
-                        .appendTo(ul);
-            };
-        });
-    </script>
-    <script>
-        // 그래프
-        $(function () {
-            $('#container').highcharts({
-                chart: {
-                    type: 'line'
-                },
-                title: {
-                    text: '최근 일주일 플레이 횟수'
-                },
-                subtitle: {
-                    text: ''
-                },
-                xAxis: {
-                    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct']
-                },
-                yAxis: {
-                    title: {
-                        text: 'Temperature (°C)'
-                    }
-                },
-                plotOptions: {
-                    line: {
-                        dataLabels: {
-                            enabled: true
+                    $('#container').highcharts({
+                        chart: {
+                            type: 'line'
                         },
-                        enableMouseTracking: false
-                    }
-                },
-                series: [{
-                    name: 'Tokyo',
-                    data: [7.0, 6.9, 9.5, 14.5, 18.4, 21.5, 25.2, 26.5, 23.3, 18.3]
-                }, {
-                    name: 'London',
-                    data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3]
-                }]
+                        title: {
+                            text: '최근 일주일 플레이 횟수'
+                        },
+                        subtitle: {
+                            text: ''
+                        },
+                        xAxis: {
+                            categories: data['categories']
+                        },
+                        yAxis: {
+                            title: {
+                                text: 'Temperature (°C)'
+                            }
+                        },
+                        plotOptions: {
+                            line: {
+                                dataLabels: {
+                                    enabled: true
+                                },
+                                enableMouseTracking: false
+                            }
+                        },
+                        series: [
+                            data['avgplay'],
+                            data['maxplay'],
+                            data['countsofplay']
+
+                        ]
+                    });
+                }
             });
+
+
+            console.log(Date.now());
+
         });
     </script>
 @endsection
