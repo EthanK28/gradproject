@@ -29,12 +29,15 @@ class ScoresController extends Controller
         $scores = Score::where('user_id', Auth::user()->id)->get();
         foreach($scores as $i => $score)
         {
-            $map_name = Map::find($score->map_id)->first();
-            $map_name = $map_name->name;
+
+            $map_name = Map::where('id',$score->map_id)->first();
+            $map_name = $map_name['name'];
             $scores[$i]['map_name'] = $map_name;
 
 
         }
+
+
 
         return view('scores.index', compact('scores'));
     }
@@ -62,13 +65,14 @@ class ScoresController extends Controller
         //
         $validator = null;
         $score_tmp = $request->all();
-        $score_tmp['user_id'] = Auth::user()->id;
+//        dd($score_tmp);
+        $score_tmp['user_id'] = "".Auth::user()->id;
 //        dd($score_tmp);
 
 
 
         $score = \App\Score::create($score_tmp);
-        $score['user_id'] = Auth::user()->id;
+//        $score['user_id'] = Auth::user()->id;
 
         Flash::info('점수 생성 성공');
 

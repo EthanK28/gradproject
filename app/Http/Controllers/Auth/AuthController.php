@@ -76,7 +76,6 @@ class AuthController extends Controller
     public function userHasLoggedIn($user) {
         \Session::flash('message', 'Welcome, ' . $user->username);
         // return redirect('/dashboard');
-        $user->practicelangs();
         return redirect('/');
     }
 

@@ -69,12 +69,11 @@
             </ul>
             @if(Auth::check())
                 <ul class="nav navbar-nav navbar-right">
-                    @if(Auth::user()->avartar)
 
 
-                    @endif
 
-                    <li><img src="holder.js/45x45" class="img-circle"/> <span class="navbar-text">Signed in as <span style="color:#23527c"><strong>{{ Auth::user()->name }}</strong></span></span></li>
+                    <li>@if(Auth::user()->avartar =! "") <img src="{{ Auth::user()->avatar }}" style="width: 45px;" class="img-circle"/> @endif
+                        <span class="navbar-text">Signed in as <span style="color:#23527c"><strong>{{ Auth::user()->name }}</strong></span></span></li>
                     <li>{!! link_to_action('Auth\AuthController@getLogout', '로그 아웃') !!}</li>
 
                 </ul>
