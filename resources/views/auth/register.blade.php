@@ -22,6 +22,11 @@
             <input type="password" class="form-control" name="password" id="password" required="required" placeholder="Password">
         </div>
 
+        <div class="form-group">
+            <label for="file">프로필 사진</label>
+            <input type="file"  name="image" id="file">
+        </div>
+
         <button type="submit" class="btn btn btn-danger">Register</button>
     </form>
 </div>

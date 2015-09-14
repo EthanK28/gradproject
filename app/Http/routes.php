@@ -17,10 +17,28 @@ Route::get('/', ['as' =>  'index' ,function(){
     $rct_histories = DB::table('scores')->orderBy('created_at', 'desc')->take(5)->get();
 
     // 일주일 전 로스트 체크
+    // 평균 점수, 최고 점수
     $now = \Carbon\Carbon::now();
+
+    $now_year = $now->year;
+    $now_month = $now->month;
+    $now_day = $now->day;
+
+    $today_midnight = \Carbon\Carbon::create($now_year, $now_month, $now_day, 0);
+
+    
+
 
     return view('index', compact('rct_histories', 'words'))->with(['name' => '강은석']);
 }]);
+
+
+function barChartData($name, $data)
+{
+
+}
+
+
 
 
 // 페이스북 연동
@@ -66,9 +84,14 @@ Route::get('lwwords', function () {
 
     $words = \App\Word::where('created_at', '<', $one_week_before_now);
     $words_count = [];
+
+    $words_count['series']['name'] = 'Test';
+
+
     for($i = 0; $i < 7; $i++)
     {
-        $words_count[$one_week_before_now->toDateString()] = \App\Word::where('created_at', '>', $one_week_before_now)
+        $words_count['categories'][$i] = $one_week_before_now->toDateString();
+        $words_count['series']['data'][] = \App\Word::where('created_at', '>', $one_week_before_now)
             ->where('created_at', '<', $one_week_before_now->copy()->addDay())->count();
         $one_week_before_now->addDay();
     }

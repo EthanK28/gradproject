@@ -40,12 +40,19 @@
     <div class="row">
         <div class="col-md-6">
             <h3>단어 분포</h3>
-            <div id="wordspread"></div>
-        </div>
-        <div id="test" class="col-md-6">
-            <div id="lastweek">
+            <div id="wordspread">
 
             </div>
+        </div>
+        <div class="col-md-6">
+            <div id="container">
+
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+
         </div>
     </div>
 @endsection
@@ -67,12 +74,13 @@
                         source = data;
                         console.log('아작스 실행');
                         console.log(data);
-                        console.log(typeof data[0].name);
+                        console.log('첫번째 아작스');
+
 
                         $('#test').html(data);
 
                         // Build the chart
-                        $('#wordspread').highcharts({
+                        $('#container').highcharts({
                             chart: {
                                 plotBackgroundColor: null,
                                 plotBorderWidth: null,
@@ -105,14 +113,53 @@
                             }]
                         });
 
-
-
-
-
                     }
                 }).fail(function(){
                     console.log('아작스 실패');
                 });
+
+            $.ajax({
+               type: "GET",
+                url: "/lwwords",
+                dataType:"json",
+                success: function(data) {
+                    console.log(data['series'].name);
+                    console.log(data['series']);
+                    console.log(data['categories']);
+
+                    $('#wordspread').highcharts({
+                        chart: {
+                            type: 'line'
+                        },
+                        title: {
+                            text: '최근 일주일간 단어 추가 비율'
+                        },
+                        xAxis: {
+                            categories: data['categories']
+                        },
+                        yAxis: {
+                            title: {
+                                text: 'Temperature (°C)'
+                            }
+                        },
+                        plotOptions: {
+                            line: {
+                                dataLabels: {
+                                    enabled: true
+                                },
+                                enableMouseTracking: false
+                            }
+                        },
+                        series: [{
+                            name: data['series'].name,
+                            data: data['series'].data
+                        }]
+                    });
+                }
+            });
+
+
+
 
 
 
