@@ -121,7 +121,7 @@
                 }
             }).autocomplete( "instance" )._renderItem = function( ul, item ) {
                 return $( "<li>" )
-                        .append( "<img src='#'>"+"<a>" + item.name + "<br>" + item.email + "</a>" )
+                        .append("<a>" + item.name + "<br>" + item.email + "</a>" )
                         .appendTo( ul );
             };
         });

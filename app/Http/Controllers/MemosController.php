@@ -63,6 +63,7 @@ class MemosController extends Controller
         //
         $memo = $request->all();
 //        dd($request->me_recv_mb_id);
+
         $memo['me_recv_mb_id'] = User::where('email', $request->me_recv_mb_id)->value('id');
         $memo['me_send_mb_id'] = Auth::user()->id;
         $memo = Memo::create($memo);
@@ -85,7 +86,7 @@ class MemosController extends Controller
     {
         //
         $memo = Memo::findOrFail($id);
-        dd($memo);
+
         return view('memos.show')->with('memo', $memo);
 
     }

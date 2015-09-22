@@ -21,6 +21,7 @@
                     <tr>
                         <th>단어</th>
                         <th>생성 날짜</th>
+                        <th>암기 여부</th>
                         <th></th>
                     </tr>
                     </thead>
@@ -29,6 +30,13 @@
                         <tr>
                             <td>{!! link_to_route('words.show', $word->name, $word->id) !!}</td>
                             <td>{{ $word->created_at }}</td>
+                            <td>
+                                @if($word->is_memorized == false)
+                                    {!! link_to_route('words.memorized', '미암기', $word->id, ['class' =>'btn btn-warning'])!!}
+                                @else
+                                    {!! link_to_route('words.memorized', '암기', $word->id, ['class' =>'btn btn-success'])!!}
+                                @endif
+                            </td>
                             <td>
                                 {!! Form::open(['route' => ['words.destroy', $word->id], 'method' => 'delete']) !!}
                                 {!! Form::submit('삭제', ['class' => 'btn btn-danger']) !!}

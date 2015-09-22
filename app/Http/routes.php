@@ -204,7 +204,7 @@ Route::resource('maps', 'MapsController', [
 
 // 쪽지 컨트롤러
 Route::resource('memos', 'MemosController', [
-    'only' => ['store', 'index', 'create', 'show']
+    'only' => ['store', 'index', 'create', 'show', 'destroy']
 ]);
 
 // User 컨트롤러
@@ -214,6 +214,21 @@ Route::resource('user', 'UsersController', [
 ]);
 
 // 단어
+
+Route::get('/words/memorized/{id}', ['as'=>'words.memorized', function($id){
+//    $word = Word::findOrFail($request->id);
+    $word = \App\Word::findOrFail($id);
+
+
+    if($word->is_memorized == false){
+        $word->is_memorized = true;
+    } else {
+        $word->is_memorized = false;
+    }
+
+    $word->save();
+    return redirect('/words');
+}]);
 
 Route::resource('words', 'WordsController');
 
@@ -232,4 +247,8 @@ Route::get('/userlist', function () {
 
 //    dd($users);
     return $users;
+});
+
+Route::get('/score', function() {
+    return "스코어";
 });

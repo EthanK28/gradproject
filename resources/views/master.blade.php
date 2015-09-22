@@ -81,8 +81,8 @@
             @else
                 <ul class="nav navbar-nav navbar-right">
 
-                    <li>dd</li>
-                    <li><a href="/login/facebook">Facebook<i class="fa fa-facebook-square fa-lg"></i></a></li>
+                    
+                    {{--<li><a href="/login/facebook">Facebook<i class="fa fa-facebook-square fa-lg"></i></a></li>--}}
                     <li>{!! link_to_action('Auth\AuthController@getRegister', '회원가입') !!}</li>
                     <li>{!! link_to_action('Auth\AuthController@getLogin', '로그인') !!}</li>
 

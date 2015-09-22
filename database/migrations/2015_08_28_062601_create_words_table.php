@@ -19,6 +19,7 @@ class CreateWordsTable extends Migration
                 'interjection']);
             $table->string('name');
             $table->text('definition');
+            $table->boolean('is_memorized')->default(false);
             $table->timestamps();
         });
     }

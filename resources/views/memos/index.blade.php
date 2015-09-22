@@ -24,8 +24,8 @@
                     <td>
                     {!! link_to_route('memos.show', $memo->text, $memo->id) !!}
                     </td>
-                    <td>{{ $memo->me_recv_mb_id }} </td>
-                    <td>{{ $memo->me_send_datetime }} <a href="#" class="btn btn-danger">삭제</a></td>
+                    <td>{{ \App\User::find($memo->me_recv_mb_id)->name }} </td>
+                    <td>{{ $memo->me_send_datetime }}</td>
                     <td>
                         {!! Form::open(['route' => ['memos.destroy', $memo->id], 'method' => 'delete']) !!}
                             {!! Form::submit('삭제', ['class' => 'btn btn-danger']) !!}
@@ -43,15 +43,15 @@
         <tr>
             <th>번호</th>
             <th class="memo_text">내용</th>
-            <th>받는 사람</th>
-            <th>보낸 날짜</th>
+            <th>보낸 사람</th>
+            <th>받은 날짜</th>
         </tr>
         <tbody>
         @foreach($recv_memos as $i => $memo)
             <tr>
                 <td>{{ $i+1 }}</td>
                 <td>{{ $memo->text }}</td>
-                <td>{{ $memo->me_recv_mb_id }} <a href="#" class="btn btn-danger">삭제</a></td>
+                <td>{{ $memo->me_recv_mb_id }} </td>
                 <td>
                     {!! Form::open(['route' => ['memos.destroy', $memo->id], 'method' => 'delete']) !!}
                         {!! Form::submit('삭제', ['class' => 'btn btn-danger']) !!}

@@ -94,6 +94,20 @@ class WordsController extends Controller
         return json_encode($words_count);
     }
 
+    public function isMemorized(Request $request){
+        $word = Word::findOrFail($request->id);
+        dd($word);
+
+        if($word->is_memorized == false){
+            $word->is_memorized = true;
+        } else {
+            $word->is_memorized = false;
+        }
+
+        $word->save();
+        return redirect('/words');
+    }
+
 
     /**
      * Show the form for creating a new resource.
